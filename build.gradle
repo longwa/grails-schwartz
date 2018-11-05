@@ -112,3 +112,6 @@ asciidoctor {
 	            toc2                : '',
 	            toclevels           : '2'
 }
+
+apply from: rootProject.file("gradle/publishing.gradle")
+
