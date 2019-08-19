@@ -59,13 +59,16 @@ class QuartzServiceMocks {
 		}
 
 		if (!grailsApplication) {
-			ApplicationContext ctx = [getBean: { String name, Class type ->
-				if (type == SchwartzSchedulerFactoryBean) {
-					SchwartzSchedulerFactoryBean factoryBean = newSchwartzSchedulerFactoryBean()
-					factoryBean.finalQuartzProperties = [:] as Properties
-					factoryBean
-				}
-			}] as ApplicationContext
+			ApplicationContext ctx = [
+				getBean: { String name, Class type ->
+                    if (type == SchwartzSchedulerFactoryBean) {
+                        SchwartzSchedulerFactoryBean factoryBean = newSchwartzSchedulerFactoryBean()
+                        factoryBean.finalQuartzProperties = [:] as Properties
+                        factoryBean
+                    }
+				},
+				getBeansOfType: { Class type -> [:] }
+			] as ApplicationContext
 			grailsApplication = [getConfig: { -> config }, getMainContext: { -> ctx }] as GrailsApplication
 		}
 		service['grailsApplication'] = grailsApplication
